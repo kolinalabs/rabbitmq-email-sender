@@ -5,10 +5,11 @@
         "php": "^7.0.8",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "php-amqplib/rabbitmq-bundle": "^1.14",
         "symfony/console": "*",
         "symfony/flex": "^1.1",
         "symfony/framework-bundle": "*",
-        "symfony/swiftmailer-bundle": "^3.2",
+        "symfony/swiftmailer-bundle": "~2.3",
         "symfony/yaml": "*"
     },
     "require-dev": {
