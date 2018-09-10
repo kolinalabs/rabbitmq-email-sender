@@ -78,6 +78,8 @@ class EmailConsumer
         try {
             $this->transport->send($message);
         } catch (Swift_TransportException $e) {
+            $this->transport->stop();
+
             if ($failures >= self::MAX_RETRY) {
                 return;
             }
