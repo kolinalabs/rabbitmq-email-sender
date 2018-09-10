@@ -15,6 +15,7 @@ use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 use Swift_Transport;
 use Swift_Mime_Message;
+use Swift_TransportException;
 
 /**
  * EmailConsumer
@@ -23,6 +24,10 @@ use Swift_Mime_Message;
  */
 class EmailConsumer
 {
+    const MAX_RETRY = 3;
+
+    const RETRY_AFTER_FACTOR = 3;
+
     /** @var Swift_Transport */
     protected $transport;
 
@@ -37,7 +42,8 @@ class EmailConsumer
 
     /**
      * @param AMQPMessage $msg
-     * @return bool
+     * @return int
+     * @throws \Exception
      */
     public function execute(AMQPMessage $msg)
     {
@@ -47,6 +53,7 @@ class EmailConsumer
     /**
      * @param AMQPMessage $msg
      * @return int
+     * @throws \Exception
      */
     public function processMessage(AMQPMessage $msg)
     {
@@ -60,14 +67,26 @@ class EmailConsumer
 
     /**
      * @param Swift_Mime_Message $message
+     * @param int $failures
      */
-    private function sendEmail(Swift_Mime_Message $message)
+    private function sendEmail(Swift_Mime_Message $message, $failures = 0)
     {
         if (! $this->transport->isStarted()) {
             $this->transport->start();
         }
 
-        $this->transport->send($message);
-        $this->transport->stop();
+        try {
+            $this->transport->send($message);
+        } catch (Swift_TransportException $e) {
+            if ($failures >= self::MAX_RETRY) {
+                return;
+            }
+
+            $failures++;
+            sleep($failures ** self::RETRY_AFTER_FACTOR);
+            $this->sendEmail($message, $failures);
+        } finally {
+            $this->transport->stop();
+        }
     }
 }
