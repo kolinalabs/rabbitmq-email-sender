@@ -87,6 +87,9 @@ class EmailConsumer
             $failures++;
             sleep($failures ** self::RETRY_AFTER_FACTOR);
             $this->sendEmail($message, $failures);
+        } catch (\Exception $e) {
+            $this->transport->stop();
+            return;
         } finally {
             $this->transport->stop();
         }
