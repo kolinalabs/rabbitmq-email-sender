@@ -13,7 +13,7 @@ test:
       - "phpunit.xml.dist"
     directory:
       - "tests/"
-    coverage: "tests/logs/coverage"
+    coverage: false
   php_mess_detector:
     rules:
       - "codesize"
