@@ -23,7 +23,9 @@ test:
   php_code_sniffer:
     path: "src"
     standard: "PSR1,PSR2"
+    allow_failures: true
   php_docblock_checker:
     path: "src"
+    allow_failures: true
   php_cpd:
     allow_failures: true
