@@ -4,6 +4,8 @@ build_settings:
     - "tests"
 
 setup:
+  sheel:
+    - "echo %BUILDPATH%"
   composer:
     action: "install"
 
