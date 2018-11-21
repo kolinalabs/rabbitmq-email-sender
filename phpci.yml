@@ -4,8 +4,6 @@ build_settings:
     - "tests"
 
 setup:
-  shell:
-    - "echo %BUILDPATH%"
   composer:
     action: "install"
 
