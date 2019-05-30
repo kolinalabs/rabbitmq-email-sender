@@ -12,6 +12,7 @@
 namespace App\Tests\Consumer;
 
 use App\Consumer\EmailConsumer;
+use App\Consumer\MinuteRateController;
 use App\Tests\Fixtures\SwiftFailTransport;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
@@ -66,16 +67,18 @@ class EmailConsumerTest extends TestCase
 
     protected function prepareEmailConsumer()
     {
+        $minuteRateController = new MinuteRateController();
         $swiftMailerTransport = $this->createMock(\Swift_Transport::class);
 
-        return new EmailConsumer($swiftMailerTransport);
+        return new EmailConsumer($minuteRateController, $swiftMailerTransport);
     }
 
     protected function prepareEmailConsumerWithFail()
     {
+        $minuteRateController = new MinuteRateController();
         $swiftMailerTransport = new SwiftFailTransport();
 
-        return new EmailConsumer($swiftMailerTransport);
+        return new EmailConsumer($minuteRateController, $swiftMailerTransport);
     }
 
     protected function prepareAMQPMessage()
