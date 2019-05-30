@@ -12,7 +12,7 @@ jobs:
     steps:
       - run:
           name: Install PHP Extensions
-          command: sudo docker-php-ext-install bcmath
+          command: sudo docker-php-ext-install bcmath sockets
 
       - run:
           name: Install Memcached
