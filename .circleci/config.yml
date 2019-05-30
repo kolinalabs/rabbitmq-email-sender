@@ -24,7 +24,7 @@ jobs:
 
       - run:
           name: Enable PHP Memached extension
-          command: sudo echo extension=memcached.so >> /usr/local/etc/php/conf.d/memcached.ini
+          command: 'echo "extension=memcached.so" | sudo tee /usr/local/etc/php/conf.d/memcached.ini'
 
       - checkout
 
