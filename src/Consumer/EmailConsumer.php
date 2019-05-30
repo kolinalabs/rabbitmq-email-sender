@@ -28,15 +28,20 @@ class EmailConsumer
 
     const RETRY_AFTER_FACTOR = 3;
 
+    /** @var MinuteRateController */
+    private $minutesRateController;
+
     /** @var Swift_Transport */
     protected $transport;
 
     /**
      * EmailConsumer constructor.
+     * @param MinuteRateController $minutesRateController
      * @param Swift_Transport $transport
      */
-    public function __construct(Swift_Transport $transport)
+    public function __construct(MinuteRateController $minutesRateController, Swift_Transport $transport)
     {
+        $this->minutesRateController = $minutesRateController;
         $this->transport = $transport;
     }
 
@@ -47,6 +52,10 @@ class EmailConsumer
      */
     public function execute(AMQPMessage $msg)
     {
+        if (! $this->minutesRateController->checkCanSend()) {
+            return ConsumerInterface::MSG_REJECT_REQUEUE;
+        }
+
         return $this->processMessage($msg);
     }
 
