@@ -16,11 +16,11 @@ jobs:
 
       - run:
           name: Install Memcached
-          command: apt-get update && apt-get install -y libz-dev libmemcached-dev
+          command: sudo apt-get update && sudo apt-get install -y libz-dev libmemcached-dev
 
       - run:
           name: Install PHP Memached extension
-          command: pecl install memcached
+          command: sudo pecl install memcached
 
       - checkout
 
