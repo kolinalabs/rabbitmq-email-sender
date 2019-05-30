@@ -22,6 +22,10 @@ jobs:
           name: Install PHP Memached extension
           command: sudo pecl install memcached
 
+      - run:
+          name: Enable PHP Memached extension
+          command: sudo echo extension=memcached.so >> /usr/local/etc/php/conf.d/memcached.ini
+
       - checkout
 
       # Download and cache dependencies
