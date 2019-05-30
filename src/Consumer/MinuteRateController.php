@@ -52,8 +52,6 @@ final class MinuteRateController
             throw new \RuntimeException('Invalid cache limit value');
         }
 
-        var_dump($currentUsage);
-
         return $currentUsage;
     }
 
