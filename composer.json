@@ -2,9 +2,8 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^7.2",
+        "php": "^7.0.8",
         "ext-ctype": "*",
-        "ext-memcached": "*",
         "ext-iconv": "*",
         "php-amqplib/rabbitmq-bundle": "^1.14",
         "symfony/console": "*",

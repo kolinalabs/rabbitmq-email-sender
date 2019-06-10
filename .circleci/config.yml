@@ -6,25 +6,13 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.2-apache-node-browsers
+      - image: circleci/php:7.0-apache-node-browsers
     working_directory: ~/repo
 
     steps:
       - run:
           name: Install PHP Extensions
-          command: sudo docker-php-ext-install bcmath sockets
-
-      - run:
-          name: Install Memcached
-          command: sudo apt-get update && sudo apt-get install -y libz-dev libmemcached-dev
-
-      - run:
-          name: Install PHP Memached extension
-          command: sudo pecl install memcached
-
-      - run:
-          name: Enable PHP Memached extension
-          command: 'echo "extension=memcached.so" | sudo tee /usr/local/etc/php/conf.d/memcached.ini'
+          command: sudo docker-php-ext-install bcmath
 
       - checkout
 
